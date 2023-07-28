@@ -1,13 +1,18 @@
 package me.weikuwu.cute.guis;
 
 import me.weikuwu.cute.guis.elements.Button;
+import me.weikuwu.cute.utils.font.Fonts;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.util.ResourceLocation;
 
 import java.io.IOException;
 
-public class ConfigGUI extends GuiScreen {
+import static me.weikuwu.cute.utils.gui.GuiUtils.drawRoundedRect;
+
+public class CatUIScreen extends GuiScreen {
     private GuiTextField textField;
 
     @Override
@@ -15,7 +20,6 @@ public class ConfigGUI extends GuiScreen {
         this.buttonList.add(new Button(1, this.width / 2 - 50, this.height / 2 - 20, 100, 40, "Click Me!"));
         int guiLeft = (width - 200) / 2;
         int guiTop = (height - 140) / 2;
-
         textField = new GuiTextField(0, fontRendererObj, guiLeft + 20, guiTop + 30, 160, 20);
         textField.setFocused(true);
         textField.setMaxStringLength(50);
@@ -26,8 +30,17 @@ public class ConfigGUI extends GuiScreen {
         drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        drawCenteredString(fontRendererObj, "Custom GUI", width / 2, 20, 0xFFFFFF);
-
+        int guiWidth = 1920;
+        int guiHeight = 1080;
+        int screenWidth = Minecraft.getMinecraft().displayWidth;
+        int screenHeight = Minecraft.getMinecraft().displayHeight;
+        double scaleFactor = 1920.0 / screenWidth;
+        int rectWidth = (int) (100 * scaleFactor);
+        int rectHeight = (int) (50 * scaleFactor);
+        int rectX = (screenWidth - rectWidth) / 2;
+        int rectY = (screenHeight - rectHeight) / 2;
+        drawRoundedRect(rectX, rectY, rectX + rectWidth, rectY + rectHeight, 50, 0xFFFF0000);
+        Fonts.Inter.drawString("Custom GUI", width / 2, 20, 0xFFFFFFFF);
         textField.drawTextBox();
     }
 
@@ -66,4 +79,5 @@ public class ConfigGUI extends GuiScreen {
     public boolean doesGuiPauseGame() {
         return false;
     }
+
 }
