@@ -1,4 +1,4 @@
-package me.weikuwu.cute.utils.fonts;
+package me.weikuwu.cute.utils.font;
 
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import org.lwjgl.opengl.GL11;

@@ -1,6 +1,6 @@
-package me.weikuwu.cute.guis;
+package me.weikuwu.cute.guis.elements;
 
-import me.weikuwu.cute.utils.fonts.Fonts;
+import me.weikuwu.cute.utils.font.Fonts;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 

@@ -1,9 +1,8 @@
-package me.weikuwu.cute.utils.fonts;
-
+package me.weikuwu.cute.utils.font;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
-
+import me.weikuwu.cute.utils.font.*;
 import java.awt.*;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ public class Fonts {
             if (locationMap.containsKey("Inter-Regular.ttf")) {
                 font = locationMap.get("Inter-Regular.ttf").deriveFont(Font.PLAIN, (float) 18);
             } else {
-                final InputStream is = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("catmod", "fonts:Inter-VariableFont.ttf")).getInputStream();
+                final InputStream is = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("catmod", "fonts/Inter-VariableFont.ttf")).getInputStream();
                 font = Font.createFont(0, is);
                 locationMap.put("Inter-Regular.ttf", font);
                 font = font.deriveFont(Font.PLAIN, (float) 18);

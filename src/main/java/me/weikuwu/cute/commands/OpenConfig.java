@@ -1,6 +1,6 @@
 package me.weikuwu.cute.commands;
 
-import me.weikuwu.cute.CATMOD;
+import me.weikuwu.cute.CatMod;
 import me.weikuwu.cute.guis.ConfigGUI;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Config extends CommandBase {
+public class OpenConfig extends CommandBase {
     @Override
     public String getCommandName() {
         return "cat";
@@ -27,7 +27,7 @@ public class Config extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
-        CATMOD.gui = new ConfigGUI();
+        CatMod.gui = new ConfigGUI();
     }
 
     @Override

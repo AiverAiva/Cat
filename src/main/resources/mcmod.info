@@ -1,10 +1,10 @@
 [
   {
-    "modid": "cutemod",
+    "modid": "${modid}",
     "name": "Cat Mod",
     "description": "it cutes",
-    "version": "1.0",
-    "mcversion": "1.8.9",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
     "url": "",
     "updateUrl": "",
     "authorList": [

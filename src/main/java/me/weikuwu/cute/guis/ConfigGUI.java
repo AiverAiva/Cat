@@ -1,5 +1,6 @@
 package me.weikuwu.cute.guis;
 
+import me.weikuwu.cute.guis.elements.Button;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
