@@ -28,11 +28,12 @@ public class CapeLoader {
     private static final HashMap<String, ArrayList<ResourceLocation>> animatedCapes = new HashMap<>();
 
     public static ResourceLocation getCape(NetworkPlayerInfo player) {
-        String userHash = DigestUtils.md5Hex(player.getGameProfile().getId().toString().replace("-", ""));
+        String userHash = DigestUtils.sha256Hex(player.getGameProfile().getId().toString());
+//        System.out.println(userHash);
         String capeName = playerCapes.get(userHash);
         if (capeName == null) return null;
 
-//        if (capeName.endsWith("_anim")) return getAnimatedCape(capeName);
+        if (capeName.startsWith("animated")) return getAnimatedCape(capeName); System.out.println("anim");
         return capes.get(capeName);
     }
 
@@ -59,7 +60,7 @@ public class CapeLoader {
 
                 System.out.println("Loading cape: " + capeName + " (" + capeUrl + ")");
 
-                if (capeName.endsWith("_anim")) {
+                if (capeName.startsWith("animated")) {
                     animatedCapes.put(capeName, animatedCapeFromFile(capeName, capeUrl));
                 } else {
                     capes.put(capeName, capeFromFile(capeName, capeUrl));
