@@ -6,13 +6,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.util.ResourceLocation;
 
 import java.io.IOException;
 
-import static me.weikuwu.cute.utils.gui.GuiUtils.drawRoundedRect;
 
-public class CatUIScreen extends GuiScreen {
+public class CatGUI extends GuiScreen {
     private GuiTextField textField;
 
     @Override
@@ -39,7 +37,7 @@ public class CatUIScreen extends GuiScreen {
         int rectHeight = (int) (50 * scaleFactor);
         int rectX = (screenWidth - rectWidth) / 2;
         int rectY = (screenHeight - rectHeight) / 2;
-        drawRoundedRect(rectX, rectY, rectX + rectWidth, rectY + rectHeight, 50, 0xFFFF0000);
+//        drawRoundedRect(rectX, rectY, rectX + rectWidth, rectY + rectHeight, 50, 0xFFFF0000);
         Fonts.Inter.drawString("Custom GUI", width / 2, 20, 0xFFFFFFFF);
         textField.drawTextBox();
     }

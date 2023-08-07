@@ -1,8 +1,7 @@
 package me.weikuwu.cute.commands;
 
 import me.weikuwu.cute.CatMod;
-import me.weikuwu.cute.guis.CatUIScreen;
-import net.minecraft.command.CommandBase;
+import me.weikuwu.cute.guis.CatGUI;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
@@ -30,7 +29,7 @@ public class OpenConfig implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
-        CatMod.gui = new CatUIScreen();
+        CatMod.gui = new CatGUI();
     }
 
     @Override

@@ -33,7 +33,7 @@ public class CapeLoader {
         String capeName = playerCapes.get(userHash);
         if (capeName == null) return null;
 
-        if (capeName.startsWith("animated")) return getAnimatedCape(capeName); System.out.println("anim");
+        if (capeName.startsWith("animated")) return getAnimatedCape(capeName);
         return capes.get(capeName);
     }
 
