@@ -1,28 +1,20 @@
 package me.weikuwu.cute.utils.gui;
 
 import me.weikuwu.cute.EventManager;
+import org.lwjgl.opengl.GL11;
+import java.nio.FloatBuffer;
+import static org.lwjgl.opengl.GL11.*;
 
 public class GuiUtils {
-    private static boolean wasMouseDown = false;
+//    private static boolean wasMouseDown = false;
 
     static {
         EventManager.INSTANCE.register(new GuiUtils());
     }
 
-    public static boolean wasMouseDown() {
-        return wasMouseDown;
-    }
-
-//    public static void drawRoundedRect(int x, int y, int width, int height, int cornerRadius, int color) {
-//        Gui.drawRect(x + cornerRadius, y, x + width - cornerRadius, y + height, color);
-//        Gui.drawRect(x, y + cornerRadius, x + width, y + height - cornerRadius, color);
-//
-//        drawCircle(x + cornerRadius, y + cornerRadius, cornerRadius, color);
-//        drawCircle(x + width - cornerRadius, y + cornerRadius, cornerRadius, color);
-//        drawCircle(x + cornerRadius, y + height - cornerRadius, cornerRadius, color);
-//        drawCircle(x + width - cornerRadius, y + height - cornerRadius, cornerRadius, color);
+//    public static boolean wasMouseDown() {
+//        return wasMouseDown;
 //    }
-//
 //    private static void drawCircle(int x, int y, int radius, int color) {
 //        int diameter = radius * 2;
 //

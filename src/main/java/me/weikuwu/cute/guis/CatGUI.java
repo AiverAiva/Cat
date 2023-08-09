@@ -1,17 +1,25 @@
 package me.weikuwu.cute.guis;
 
+import me.weikuwu.cute.CatMod;
 import me.weikuwu.cute.guis.elements.Button;
 import me.weikuwu.cute.utils.font.Fonts;
+import me.weikuwu.cute.utils.gui.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.ScaledResolution;
+import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 
 
 public class CatGUI extends GuiScreen {
     private GuiTextField textField;
+    private static final float ASPECT_RATIO_WIDTH = 16f;
+    private static final float ASPECT_RATIO_HEIGHT = 9f;
+
+    private CatRenderer guiRenderer;
 
     @Override
     public void initGui() {
@@ -26,20 +34,13 @@ public class CatGUI extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
-        super.drawScreen(mouseX, mouseY, partialTicks);
 
-        int guiWidth = 1920;
-        int guiHeight = 1080;
-        int screenWidth = Minecraft.getMinecraft().displayWidth;
-        int screenHeight = Minecraft.getMinecraft().displayHeight;
-        double scaleFactor = 1920.0 / screenWidth;
-        int rectWidth = (int) (100 * scaleFactor);
-        int rectHeight = (int) (50 * scaleFactor);
-        int rectX = (screenWidth - rectWidth) / 2;
-        int rectY = (screenHeight - rectHeight) / 2;
-//        drawRoundedRect(rectX, rectY, rectX + rectWidth, rectY + rectHeight, 50, 0xFFFF0000);
-        Fonts.Inter.drawString("Custom GUI", width / 2, 20, 0xFFFFFFFF);
-        textField.drawTextBox();
+        if (guiRenderer == null) {
+            guiRenderer = new CatRenderer(mc);
+        }
+        guiRenderer.renderGui(mouseX, mouseY, partialTicks);
+
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     @Override
@@ -79,3 +80,21 @@ public class CatGUI extends GuiScreen {
     }
 
 }
+
+//    @Override
+//    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+//        drawDefaultBackground();
+//        super.drawScreen(mouseX, mouseY, partialTicks);
+//
+//        int guiWidth = 1920;
+//        int guiHeight = 1080;
+//        int screenWidth = Minecraft.getMinecraft().displayWidth;
+//        int screenHeight = Minecraft.getMinecraft().displayHeight;
+//        double scaleFactor = 1920.0 / screenWidth;
+//        int rectWidth = (int) (100 * scaleFactor);
+//        int rectHeight = (int) (50 * scaleFactor);
+//        int rectX = (screenWidth - rectWidth) / 2;
+//        int rectY = (screenHeight - rectHeight) / 2;
+//        Fonts.Inter.drawString("Custom GUI", width / 2, 20, 0xFFFFFFFF);
+//        textField.drawTextBox();
+//    }

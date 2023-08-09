@@ -1,9 +1,6 @@
 package me.weikuwu.cute;
 
-import com.sun.jdi.InvalidTypeException;
-import jdk.vm.ci.meta.ExceptionHandler;
 import net.minecraftforge.common.MinecraftForge;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
