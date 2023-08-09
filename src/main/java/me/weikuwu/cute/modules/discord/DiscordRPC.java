@@ -20,7 +20,11 @@ public class DiscordRPC {
                 builder.setState(stateLine)
                         .setDetails(detailsLine)
                         .setStartTimestamp(OffsetDateTime.now())
-                        .setLargeImage("mainrpcimage", "Cat Mod");//                        .setSmallImage("https://cdn.discordapp.com/attachments/774586121505996801/1132854907628683346/107178319_p0.jpg", "test");//                        .setSmallImage("ptb-small", "Discord PTB")//                        .setParty("party1234", 1, 6)//                        .setMatchSecret("xyzzy")//                        .setJoinSecret("join")//                        .setSpectateSecret("look");
+                        .setLargeImage("mainrpcimage", "Cat Mod");
+                //                        .setSmallImage("https://cdn.discordapp.com/attachments/774586121505996801/1132854907628683346/107178319_p0.jpg", "test");
+                //                        .setSmallImage("ptb-small", "Discord PTB")//                        .setParty("party1234", 1, 6)
+                //                        .setMatchSecret("xyzzy")//                        .setJoinSecret("join")
+                //                        .setSpectateSecret("look");
                 client.sendRichPresence(builder.build());
             }
         });
