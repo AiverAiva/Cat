@@ -6,8 +6,10 @@ import me.weikuwu.cute.config.Config;
 import me.weikuwu.cute.config.ConfigManager;
 import me.weikuwu.cute.config.settings.Setting;
 import me.weikuwu.cute.events.TickEndEvent;
+import me.weikuwu.cute.handlers.KeyInputHandler;
 import me.weikuwu.cute.modules.discord.DiscordRPC;
 import me.weikuwu.cute.modules.dungeons.AutoCloseChest;
+import me.weikuwu.cute.modules.macros.AutoFish;
 import me.weikuwu.cute.remote.CapeLoader;
 import me.weikuwu.cute.utils.font.Fonts;
 import me.weikuwu.cute.utils.skyblock.Location;
@@ -42,6 +44,7 @@ public class CatMod {
 
         Fonts.bootstrap();
         DiscordRPC.start();
+        KeyBindings.init();
     }
 
     @Mod.EventHandler
@@ -51,7 +54,9 @@ public class CatMod {
         EventManager.registerEvents(
                 new Location(),
                 new TickEndEvent(),
-                new AutoCloseChest()
+                new AutoCloseChest(),
+                new AutoFish(),
+                new KeyInputHandler()
         );
     }
 

@@ -159,7 +159,7 @@ public class RotationUtils {
         final double diffY = vec.yCoord - (RotationUtils.mc.thePlayer.posY + RotationUtils.mc.thePlayer.getEyeHeight());
         final double diffZ = vec.zCoord - RotationUtils.mc.thePlayer.posZ;
         final double dist = MathHelper.sqrt_double(diffX * diffX + diffZ * diffZ);
-        return getVectorForRotation((float)(-(MathHelper.func_181159_b(diffY, dist) * 180.0 / 3.141592653589793)), (float)(MathHelper.func_181159_b(diffZ, diffX) * 180.0 / 3.141592653589793 - 90.0));
+        return getVectorForRotation((float)(-(MathHelper.atan2(diffY, dist) * 180.0 / 3.141592653589793)), (float)(MathHelper.atan2(diffZ, diffX) * 180.0 / 3.141592653589793 - 90.0));
     }
 
     public static EnumFacing calculateEnumfacing(final Vec3 pos) {
@@ -196,6 +196,30 @@ public class RotationUtils {
             }
         }
         return ret;
+    }
+
+    public static Rotation getNeededChange(final Rotation startRot, final Rotation endRot) {
+        float yawChng = MathHelper.wrapAngleTo180_float(endRot.getYaw()) - MathHelper.wrapAngleTo180_float(startRot.getYaw());
+        if (yawChng <= -180.0f) {
+            yawChng += 360.0f;
+        }
+        else if (yawChng > 180.0f) {
+            yawChng -= 360.0f;
+        }
+//        if (BloodCamp.godGamerMode.isEnabled()) {
+//            if (yawChng < 0.0f) {
+//                yawChng += 360.0f;
+//            }
+//            else {
+//                yawChng -= 360.0f;
+//            }
+//        }
+        return new Rotation(yawChng, endRot.getPitch() - startRot.getPitch());
+    }
+
+    public static Rotation getNeededChange(final Rotation endRot) {
+        final Rotation startRot = new Rotation(RotationUtils.mc.thePlayer.rotationYaw, RotationUtils.mc.thePlayer.rotationPitch);
+        return getNeededChange(startRot, endRot);
     }
 
     static {
