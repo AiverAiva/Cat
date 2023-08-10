@@ -4,7 +4,12 @@ import me.weikuwu.cute.CatMod;
 import me.weikuwu.cute.config.Config;
 import me.weikuwu.cute.utils.Utils;
 import me.weikuwu.cute.utils.skyblock.Location;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.dispenser.ILocation;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -16,12 +21,21 @@ public class AutoCloseChest {
 
     @SubscribeEvent
     public void onGuiBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-        if (event.gui instanceof GuiChest && Location.inSkyBlock) {
-            if (Location.inDungeon && Config.closeSecretChests && Utils.getGuiName(event.gui).equals("Chest")) {
+        if (event.gui instanceof GuiChest && Location.isInSkyblock()) {
+            if (Location.isInDungeon() && Config.closeSecretChests && Utils.getGuiName(event.gui).equals("Chest")) {
                 shouldCloseScreen = true;
             }
         }
     }
+
+//    @SubscribeEvent
+//    public static void onGuiOpen(GuiOpenEvent event) {
+//        if (event.gui instanceof GuiChest && Location.inSkyBlock) {
+//            if (Location.inDungeon && Config.closeSecretChests && Utils.getGuiName(event.gui).equals("Chest")) {
+//                event.setCanceled(true);
+//            }
+//        }
+//    }
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {

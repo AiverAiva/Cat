@@ -22,6 +22,9 @@ public class Config {
     @Property(type = Property.Type.NUMBER, name = "Sea Creature Range", parent = "Auto Fish", max = 10, step = 1, suffix = " blocks")
     public static int scRange = 6;
 
+    @Property(type = Property.Type.CHECKBOX, name = "Insta-kill Sea Creatures", parent = "Auto Fish")
+    public static boolean killPrio = true;
+
     @Property(type = Property.Type.CHECKBOX, name = "Anti AFK", parent = "Auto Fish")
     public static boolean antiAfk = true;
 
@@ -36,8 +39,6 @@ public class Config {
 
 //    @Setting(name = "HypDamage", description = "Damage you deal with Hyperion")
 //    private IntegerSetting hypDamage;
-//    @Setting(name = "KillPrio", description = "Kill SC before Re-casting (Sword)")
-//    private BooleanSetting killPrio;
 //    @Setting(name = "PetSwap", description = "Activates PetSwap on bobber in water")
 //    private BooleanSetting petSwap;
 //    @Setting(name = "AssistMode", description = "Will only reel in.")
