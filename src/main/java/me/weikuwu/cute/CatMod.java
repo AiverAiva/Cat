@@ -10,6 +10,7 @@ import me.weikuwu.cute.handlers.KeyInputHandler;
 import me.weikuwu.cute.modules.discord.DiscordRPC;
 import me.weikuwu.cute.modules.dungeons.AutoCloseChest;
 import me.weikuwu.cute.modules.macros.AutoFish;
+import me.weikuwu.cute.modules.misc.ShowCandies;
 import me.weikuwu.cute.remote.CapeLoader;
 import me.weikuwu.cute.utils.font.Fonts;
 import me.weikuwu.cute.utils.skyblock.Location;
@@ -56,7 +57,8 @@ public class CatMod {
                 new TickEndEvent(),
                 new AutoCloseChest(),
                 new AutoFish(),
-                new KeyInputHandler()
+                new KeyInputHandler(),
+                new ShowCandies()
         );
     }
 

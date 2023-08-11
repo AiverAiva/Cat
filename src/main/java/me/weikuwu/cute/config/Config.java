@@ -4,6 +4,9 @@ import me.weikuwu.cute.config.settings.Property;
 
 public class Config {
 
+    @Property(type = Property.Type.BOOLEAN, name = "Show Candies", note="Show candies on pet.")
+    public static boolean showCandies = false;
+
     @Property(type = Property.Type.BOOLEAN, name = "Auto Close Secret Chests")
     public static boolean closeSecretChests = false;
 
