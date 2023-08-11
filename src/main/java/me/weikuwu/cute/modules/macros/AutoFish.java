@@ -242,7 +242,7 @@ public class AutoFish {
             case THROWING: {
                 if (AutoFish.mc.thePlayer.fishEntity == null && AutoFish.throwTimer.hasReached(Config.recastDelay)) {
                     AutoFish.mc.thePlayer.inventory.currentItem = rodSlot;
-                    AutoFish.mc.playerController.sendUseItem((EntityPlayer)AutoFish.mc.thePlayer, (World)AutoFish.mc.theWorld, AutoFish.mc.thePlayer.getHeldItem());
+                    AutoFish.mc.playerController.sendUseItem(AutoFish.mc.thePlayer, AutoFish.mc.theWorld, AutoFish.mc.thePlayer.getHeldItem());
                     AutoFish.throwTimer.reset();
                     AutoFish.inWaterTimer.reset();
                     AutoFish.flash = false;

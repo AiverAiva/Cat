@@ -1,15 +1,12 @@
-package me.weikuwu.cute.guis.elements;
+package me.weikuwu.cute.guis.config.elements;
 
 import me.weikuwu.cute.config.settings.Setting;
 import me.weikuwu.cute.config.types.*;
 import me.weikuwu.cute.config.types.Boolean;
-import me.weikuwu.cute.config.types.Button;
 import me.weikuwu.cute.config.types.Number;
 import net.minecraft.client.gui.GuiButton;
 
 import java.awt.*;
-
-import static me.weikuwu.cute.config.settings.Property.Type.*;
 
 public abstract class ConfigInput extends GuiButton {
 

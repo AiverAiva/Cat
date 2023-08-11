@@ -6,6 +6,7 @@ import me.weikuwu.cute.config.Config;
 import me.weikuwu.cute.config.ConfigManager;
 import me.weikuwu.cute.config.settings.Setting;
 import me.weikuwu.cute.events.TickEndEvent;
+import me.weikuwu.cute.guis.Blur;
 import me.weikuwu.cute.handlers.KeyInputHandler;
 import me.weikuwu.cute.modules.discord.DiscordRPC;
 import me.weikuwu.cute.modules.dungeons.AutoCloseChest;
@@ -59,6 +60,7 @@ public class CatMod {
                 new AutoFish(),
                 new KeyInputHandler(),
                 new ShowCandies()
+//                new Blur()
         );
     }
 

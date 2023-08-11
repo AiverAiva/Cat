@@ -42,7 +42,7 @@ public class KeybindUtils {
 
     public static void leftClick() {
         try {
-            KeybindUtils.clickMouse.invoke(Minecraft.getMinecraft(), new Object[0]);
+            KeybindUtils.clickMouse.invoke(Minecraft.getMinecraft());
         }
         catch (InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
@@ -51,10 +51,11 @@ public class KeybindUtils {
 
     public static void rightClick() {
         try {
-            KeybindUtils.rightClickMouse.invoke(Minecraft.getMinecraft(), new Object[0]);
+            KeybindUtils.rightClickMouse.invoke(Minecraft.getMinecraft());
         }
-        catch (IllegalAccessException ex) {}
-        catch (InvocationTargetException ex2) {}
+        catch (IllegalAccessException | InvocationTargetException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static void stopMovement() {

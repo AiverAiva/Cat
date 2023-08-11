@@ -1,7 +1,7 @@
 package me.weikuwu.cute.commands;
 
 import me.weikuwu.cute.CatMod;
-import me.weikuwu.cute.guis.CatGUI;
+import me.weikuwu.cute.guis.config.CatGUI;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;

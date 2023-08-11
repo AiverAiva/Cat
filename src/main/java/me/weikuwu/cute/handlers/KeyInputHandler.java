@@ -9,8 +9,8 @@ public class KeyInputHandler {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (KeyBindings.toggleAutofish.isPressed()) {
-            AutoFish.Enabled = !AutoFish.Enabled;
-            AutoFish.Status++;
+//            AutoFish.Enabled = !AutoFish.Enabled;
+//            AutoFish.Status++;
         }
     }
 }

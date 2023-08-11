@@ -1,4 +1,4 @@
-package me.weikuwu.cute.guis.elements;
+package me.weikuwu.cute.guis.config.elements;
 
 import me.weikuwu.cute.utils.font.Fonts;
 import net.minecraft.client.Minecraft;

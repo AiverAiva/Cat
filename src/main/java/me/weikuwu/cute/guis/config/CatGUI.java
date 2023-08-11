@@ -1,27 +1,22 @@
-package me.weikuwu.cute.guis;
+package me.weikuwu.cute.guis.config;
 
 import me.weikuwu.cute.CatMod;
 import me.weikuwu.cute.config.ConfigManager;
 import me.weikuwu.cute.config.settings.Setting;
-import me.weikuwu.cute.config.types.*;
 import me.weikuwu.cute.config.types.Boolean;
-import me.weikuwu.cute.guis.elements.*;
+import me.weikuwu.cute.guis.BlurScreen;
+import me.weikuwu.cute.guis.config.elements.*;
 import me.weikuwu.cute.utils.font.Fonts;
-import me.weikuwu.cute.utils.gui.GuiUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class CatGUI extends GuiScreen {
+public class CatGUI extends GuiScreen implements BlurScreen {
     public static ArrayList<Setting> settings = new ArrayList<>();
     private final int columnWidth = 300;
     private final int headerHeight = 100 + 9;
@@ -220,6 +215,10 @@ public class CatGUI extends GuiScreen {
         return false;
     }
 
+    @Override
+    public boolean hasBackgroundBlur() {
+        return true;
+    }
 }
 
 //    @Override

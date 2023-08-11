@@ -1,4 +1,4 @@
-package me.weikuwu.cute.guis.elements;
+package me.weikuwu.cute.guis.config.elements;
 
 import me.weikuwu.cute.config.types.Boolean;
 import net.minecraft.client.Minecraft;

@@ -1,4 +1,4 @@
-package me.weikuwu.cute.guis.elements;
+package me.weikuwu.cute.guis.config.elements;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
