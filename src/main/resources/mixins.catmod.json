@@ -8,6 +8,7 @@
   "client": [
 	"MixinGuiMainMenu",
     "MixinAbstractClientPlayer",
-    "RenderManagerAccessor"
+    "RenderManagerAccessor",
+    "ShaderGroupAccessor"
   ]
 }

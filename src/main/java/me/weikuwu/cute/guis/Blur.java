@@ -1,17 +1,15 @@
 package me.weikuwu.cute.guis;
 
 
-import com.google.common.eventbus.Subscribe;
 import me.weikuwu.cute.events.RenderEvent;
 import me.weikuwu.cute.events.ScreenOpenEvent;
 import me.weikuwu.cute.events.Stage;
 import me.weikuwu.cute.handlers.BlurHandler;
 import me.weikuwu.cute.mixin.ShaderGroupAccessor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-
 import net.minecraft.client.shader.Shader;
 import net.minecraft.client.shader.ShaderUniform;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,18 +17,18 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class Blur implements BlurHandler {
-    private final ResourceLocation blurShader = new ResourceLocation("shaders/fade_in_blur.json");
+    private final ResourceLocation blurShader = new ResourceLocation("catmod:shaders/post/fade_in_blur.json");
     private final Logger logger = LogManager.getLogger("Catmod - blur");
     private long start;
     private float progress = 0;
 
     @SubscribeEvent
-    private void onGuiChange(ScreenOpenEvent event) {
+    public void onGuiChange(ScreenOpenEvent event) {
         reloadBlur(event.screen);
     }
 
     @SubscribeEvent
-    private void onRenderTick(RenderEvent event) {
+    public void onRenderTick(RenderEvent event) {
         if (event.stage != Stage.END) {
             return;
         }

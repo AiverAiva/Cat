@@ -4,12 +4,16 @@ import me.weikuwu.cute.CatMod;
 import me.weikuwu.cute.config.ConfigManager;
 import me.weikuwu.cute.config.settings.Setting;
 import me.weikuwu.cute.config.types.Boolean;
+import me.weikuwu.cute.events.RenderEvent;
+import me.weikuwu.cute.events.ScreenOpenEvent;
+import me.weikuwu.cute.events.Stage;
 import me.weikuwu.cute.guis.BlurScreen;
 import me.weikuwu.cute.guis.config.elements.*;
 import me.weikuwu.cute.utils.font.Fonts;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
@@ -32,6 +36,7 @@ public class CatGUI extends GuiScreen implements BlurScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        MinecraftForge.EVENT_BUS.post(new RenderEvent(Stage.START, partialTicks));
         // Dark Background
         drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
@@ -68,6 +73,7 @@ public class CatGUI extends GuiScreen implements BlurScreen {
 
         prevWidth = width;
         prevHeight = height;
+        MinecraftForge.EVENT_BUS.post(new RenderEvent(Stage.END, partialTicks));
     }
 
     @Override
@@ -88,6 +94,7 @@ public class CatGUI extends GuiScreen implements BlurScreen {
 
         ScrollBar scrollbar = new ScrollBar(headerHeight, viewport, contentHeight, scrollOffset, scrollbarX, scrolling);
         buttonList.add(scrollbar);
+        MinecraftForge.EVENT_BUS.post(new ScreenOpenEvent(this));
     }
 
     @Override
@@ -207,6 +214,7 @@ public class CatGUI extends GuiScreen implements BlurScreen {
 
     @Override
     public void onGuiClosed() {
+        MinecraftForge.EVENT_BUS.post(new ScreenOpenEvent(null));
         ConfigManager.save();
     }
 
