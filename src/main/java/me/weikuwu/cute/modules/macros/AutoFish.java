@@ -13,7 +13,7 @@ import me.weikuwu.cute.utils.gui.InventoryUtils;
 import me.weikuwu.cute.utils.math.RandomUtils;
 import me.weikuwu.cute.utils.math.Time;
 import me.weikuwu.cute.utils.math.Vec;
-import me.weikuwu.cute.utils.network.Requests;
+import me.weikuwu.cute.utils.remote.Requests;
 import me.weikuwu.cute.utils.render.Render3D;
 import me.weikuwu.cute.utils.skyblock.SkyblockUtils;
 import net.minecraft.client.*;

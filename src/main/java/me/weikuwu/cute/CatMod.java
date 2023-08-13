@@ -8,11 +8,11 @@ import me.weikuwu.cute.config.settings.Setting;
 import me.weikuwu.cute.events.TickEndEvent;
 import me.weikuwu.cute.handlers.BlurHandler;
 import me.weikuwu.cute.handlers.KeyInputHandler;
-import me.weikuwu.cute.modules.discord.DiscordRPC;
+import me.weikuwu.cute.modules.misc.DiscordRPC;
 import me.weikuwu.cute.modules.dungeons.AutoCloseChest;
 import me.weikuwu.cute.modules.macros.AutoFish;
 import me.weikuwu.cute.modules.misc.ShowCandies;
-import me.weikuwu.cute.remote.CapeLoader;
+import me.weikuwu.cute.utils.remote.CapeLoader;
 import me.weikuwu.cute.utils.font.Fonts;
 import me.weikuwu.cute.utils.skyblock.Location;
 import net.minecraft.client.Minecraft;
@@ -39,11 +39,10 @@ public class CatMod {
     public static ArrayList<Setting> settings = new ArrayList<>();
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) throws NoDiscordClientException {
+    public void preInit(FMLPreInitializationEvent event) {
         if (!dir.exists()) dir.mkdirs();
         settings = ConfigManager.collect(Config.class);
         ConfigManager.load();
-
         Fonts.bootstrap();
         DiscordRPC.start();
         KeyBindings.init();

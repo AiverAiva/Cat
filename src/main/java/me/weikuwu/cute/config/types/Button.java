@@ -13,7 +13,7 @@ public class Button extends Setting implements DoNotSave {
 
     public Button(Property annotation, Field field) {
         super(annotation, field);
-        if (!annotation.button().equals("")) buttonText = annotation.button();
+        buttonText = annotation.button().isEmpty() ? buttonText : annotation.button();
         runnable = get(Runnable.class);
     }
 

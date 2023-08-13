@@ -1,4 +1,4 @@
-package me.weikuwu.cute.mixin;
+package me.weikuwu.cute.mixins;
 
 import net.minecraft.client.renderer.entity.RenderManager;
 import org.spongepowered.asm.mixin.Mixin;

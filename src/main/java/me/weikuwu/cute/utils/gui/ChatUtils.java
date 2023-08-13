@@ -4,16 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 
 public class ChatUtils {
-    private static final String PREFIX;
+    private static final String PREFIX = "§d§lCat§r ";
 
     public static void send(String text) {
-        if (Minecraft.getMinecraft().thePlayer == null) {
-            return;
+        Minecraft mc = Minecraft.getMinecraft();
+        if (mc.thePlayer != null) {
+            mc.thePlayer.addChatComponentMessage(new ChatComponentText(PREFIX + text));
         }
-        Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText(ChatUtils.PREFIX + text));
-    }
-
-    static {
-        PREFIX = "§d§lCat§r ";
     }
 }

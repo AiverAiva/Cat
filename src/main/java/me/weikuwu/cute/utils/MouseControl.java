@@ -1,50 +1,44 @@
 package me.weikuwu.cute.utils;
 
-import net.minecraft.client.Minecraft;
+import me.weikuwu.cute.CatMod;
 import net.minecraft.util.MouseHelper;
 import org.lwjgl.input.Mouse;
 
 public class MouseControl {
-    private static boolean doesGameWantUngrab;
     public static boolean isUngrabbed;
-    private static Minecraft mc;
+    private static boolean doesGameWantUngrab;
     private static MouseHelper oldMouseHelper;
 
     public static void ungrabMouse() {
-        if (!MouseControl.mc.inGameHasFocus || MouseControl.isUngrabbed) {
-            return;
-        }
-        if (MouseControl.oldMouseHelper == null) {
-            MouseControl.oldMouseHelper = MouseControl.mc.mouseHelper;
-        }
-        MouseControl.mc.gameSettings.pauseOnLostFocus = false;
-        MouseControl.doesGameWantUngrab = !Mouse.isGrabbed();
-        MouseControl.oldMouseHelper.ungrabMouseCursor();
-        MouseControl.mc.inGameHasFocus = true;
-        MouseControl.mc.mouseHelper = new MouseHelper() {
+        if (!CatMod.mc.inGameHasFocus || isUngrabbed) return;
+
+        if (oldMouseHelper == null) oldMouseHelper = CatMod.mc.mouseHelper;
+
+        CatMod.mc.gameSettings.pauseOnLostFocus = false;
+        doesGameWantUngrab = !Mouse.isGrabbed();
+        oldMouseHelper.ungrabMouseCursor();
+        CatMod.mc.inGameHasFocus = true;
+        CatMod.mc.mouseHelper = new MouseHelper() {
             public void func_74374_c() {
             }
 
             public void func_74372_a() {
-                MouseControl.doesGameWantUngrab = false;
+                doesGameWantUngrab = false;
             }
 
             public void func_74373_b() {
-                MouseControl.doesGameWantUngrab = true;
+                doesGameWantUngrab = true;
             }
         };
-        MouseControl.isUngrabbed = true;
+        isUngrabbed = true;
     }
 
     public static void regrabMouse() {
-        if (!MouseControl.isUngrabbed) {
-            return;
-        }
-        MouseControl.isUngrabbed = false;
-        MouseControl.mc.mouseHelper = MouseControl.oldMouseHelper;
-        if (!MouseControl.doesGameWantUngrab) {
-            MouseControl.mc.mouseHelper.grabMouseCursor();
-        }
-        MouseControl.oldMouseHelper = null;
+        if (!isUngrabbed) return;
+
+        isUngrabbed = false;
+        CatMod.mc.mouseHelper = oldMouseHelper;
+        if (!doesGameWantUngrab) CatMod.mc.mouseHelper.grabMouseCursor();
+        oldMouseHelper = null;
     }
 }

@@ -1,24 +1,21 @@
 package me.weikuwu.cute.guis;
 
-
+import me.weikuwu.cute.CatMod;
 import me.weikuwu.cute.events.RenderEvent;
 import me.weikuwu.cute.events.ScreenOpenEvent;
 import me.weikuwu.cute.events.Stage;
 import me.weikuwu.cute.handlers.BlurHandler;
-import me.weikuwu.cute.mixin.ShaderGroupAccessor;
-import net.minecraft.client.Minecraft;
+import me.weikuwu.cute.mixins.ShaderGroupAccessor;
 import net.minecraft.client.shader.Shader;
 import net.minecraft.client.shader.ShaderUniform;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraft.client.renderer.OpenGlHelper;
 
 import java.util.List;
 
 public class Blur implements BlurHandler {
     private final ResourceLocation blurShader = new ResourceLocation("catmod:shaders/post/fade_in_blur.json");
-    private final Logger logger = LogManager.getLogger("Catmod - blur");
     private long start;
     private float progress = 0;
 
@@ -29,88 +26,47 @@ public class Blur implements BlurHandler {
 
     @SubscribeEvent
     public void onRenderTick(RenderEvent event) {
-        if (event.stage != Stage.END) {
+        if (event.stage != Stage.END || CatMod.mc.currentScreen == null || !isShaderActive() || progress >= 5) {
             return;
         }
 
-        if (Minecraft.getMinecraft().currentScreen == null) {
-            return;
-        }
-
-        if (!isShaderActive()) {
-            return;
-        }
-        if (progress >= 5) return;
-        progress = getBlurStrengthProgress();
-
-        // This is hilariously bad, and could cause frame issues on low-end computers.
-        // Why is this being computed every tick? Surely there is a better way?
-        // This needs to be optimized.
         try {
-            final List<Shader> listShaders = ((ShaderGroupAccessor) Minecraft.getMinecraft().entityRenderer.getShaderGroup()).getListShaders();
-
-            // Should not happen. Something bad happened.
-            if (listShaders == null) {
-                return;
-            }
-
-            // Iterate through the list of shaders.
-            for (Shader shader : listShaders) {
-                ShaderUniform su = shader.getShaderManager().getShaderUniform("Progress");
-
-                if (su == null) {
-                    continue;
+            final List<Shader> listShaders = ((ShaderGroupAccessor) CatMod.mc.entityRenderer.getShaderGroup()).getListShaders();
+            if (listShaders != null) {
+                for (Shader shader : listShaders) {
+                    ShaderUniform su = shader.getShaderManager().getShaderUniform("Progress");
+                    if (su != null) {
+                        su.set(progress);
+                    }
                 }
-
-                // All this for this.
-                su.set(progress);
             }
         } catch (IllegalArgumentException ex) {
-            this.logger.error("An error.png occurred while updating OneConfig's blur. Please report this!", ex);
+            System.out.println("An error occurred while updating blur");
         }
     }
 
     public void reloadBlur(Object gui) {
-        // Don't do anything if no world is loaded
-        if (Minecraft.getMinecraft().theWorld == null) {
+        if (CatMod.mc.theWorld == null) {
             return;
         }
 
-        // If a shader is not already active and the UI is
-        // a one of ours, we should load our own blur!
-
-        if (!isShaderActive() && (gui instanceof BlurScreen && ((BlurScreen) gui).hasBackgroundBlur())) {
-            //#if FABRIC==1
-            //$$ ((GameRendererAccessor) UMinecraft.getMinecraft().gameRenderer).invokeLoadShader(this.blurShader);
-            //#else
-            Minecraft.getMinecraft().entityRenderer.loadShader(this.blurShader);
-            //#endif
-
-            this.start = System.currentTimeMillis();
-            this.progress = 0;
-
-            // If a shader is active and the incoming UI is null or we have blur disabled, stop using the shader.
+        if (!isShaderActive() && gui instanceof BlurScreen && ((BlurScreen) gui).hasBackgroundBlur()) {
+            CatMod.mc.entityRenderer.loadShader(blurShader);
+            start = System.currentTimeMillis();
+            progress = 0;
         } else if (isShaderActive() && (gui == null || (gui instanceof BlurScreen && ((BlurScreen) gui).hasBackgroundBlur()))) {
-            String name = Minecraft.getMinecraft().entityRenderer.getShaderGroup().getShaderGroupName();
-
-            // Only stop our specific blur ;)
-            if (!name.endsWith("fade_in_blur.json")) {
-                return;
+            String name = CatMod.mc.entityRenderer.getShaderGroup().getShaderGroupName();
+            if (name.endsWith("fade_in_blur.json")) {
+                CatMod.mc.entityRenderer.stopUseShader();
             }
-
-            Minecraft.getMinecraft().entityRenderer.stopUseShader();
         }
     }
 
     private float getBlurStrengthProgress() {
-        return Math.min((System.currentTimeMillis() - this.start) / 50F, 5.0F);
+        return Math.min((System.currentTimeMillis() - start) / 50F, 5.0F);
     }
 
     private boolean isShaderActive() {
-        return Minecraft.getMinecraft().entityRenderer.getShaderGroup() != null
-                //#if MC<=11202
-                && net.minecraft.client.renderer.OpenGlHelper.shadersSupported
-                //#endif
-                ;
+        return CatMod.mc.entityRenderer.getShaderGroup() != null && OpenGlHelper.shadersSupported;
     }
 }

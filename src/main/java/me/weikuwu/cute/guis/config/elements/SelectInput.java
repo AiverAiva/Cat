@@ -6,8 +6,7 @@ import net.minecraft.client.Minecraft;
 
 public class SelectInput extends ConfigInput {
 
-    private final int leftWidth = (int) Fonts.Inter.getStringWidth("<");
-    private final int rightWidth = (int) Fonts.Inter.getStringWidth(">");
+    private final int arrowWidth = (int) Fonts.Inter.getStringWidth("<");
     private final int gap = 3;
     public Select setting;
     private boolean leftHovered = false;
@@ -22,27 +21,30 @@ public class SelectInput extends ConfigInput {
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-        rightHovered = mouseX >= xPosition - rightWidth - gap && mouseY >= yPosition && mouseX < xPosition && mouseY < yPosition + height;
-        leftHovered = mouseX >= xPosition - width && mouseY >= yPosition && mouseX < xPosition - width + leftWidth + gap && mouseY < yPosition + height;
+        leftHovered = isHovered(mouseX, mouseY, xPosition - width, xPosition - width + arrowWidth + gap, yPosition, yPosition + height);
+        rightHovered = isHovered(mouseX, mouseY, xPosition - arrowWidth - gap, xPosition, yPosition, yPosition + height);
 
-        Fonts.Inter.drawString((leftHovered ? "§a" : "§7") + "<", xPosition - width, yPosition, 0xFFFFFF);
-        Fonts.Inter.drawString(displayString, xPosition - width + leftWidth + gap, yPosition, 0xFFFFFF);
-        Fonts.Inter.drawString((rightHovered ? "§a" : "§7") + ">", xPosition - rightWidth, yPosition, 0xFFFFFF);
+        drawHoveredStringWithInts(leftHovered, "<", xPosition - width, yPosition);
+        drawStringWithInts(displayString, xPosition - width + arrowWidth + gap, yPosition);
+        drawHoveredStringWithInts(rightHovered, ">", xPosition - arrowWidth, yPosition);
     }
 
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
         if (rightHovered || leftHovered) {
-            if (rightHovered) setting.set(setting.get(Integer.class) + 1);
-            if (leftHovered) setting.set(setting.get(Integer.class) - 1);
+            setting.set(setting.get(Integer.class) + (rightHovered ? 1 : -1));
             updateText();
             return true;
         }
         return false;
     }
 
+    private boolean isHovered(int x, int y, int minX, int maxX, int minY, int maxY) {
+        return x >= minX && x < maxX && y >= minY && y < maxY;
+    }
+
     public void updateText() {
         displayString = setting.options[setting.get(Integer.class)];
-        width = (int) Fonts.Inter.getStringWidth(displayString) + rightWidth + leftWidth + gap * 2;
+        width = (int) Fonts.Inter.getStringWidth(displayString) + arrowWidth * 2 + gap * 2;
     }
 }

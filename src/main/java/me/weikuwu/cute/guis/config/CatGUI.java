@@ -8,9 +8,11 @@ import me.weikuwu.cute.events.RenderEvent;
 import me.weikuwu.cute.events.ScreenOpenEvent;
 import me.weikuwu.cute.events.Stage;
 import me.weikuwu.cute.guis.BlurScreen;
-import me.weikuwu.cute.guis.config.elements.*;
+import me.weikuwu.cute.guis.config.elements.ConfigInput;
+import me.weikuwu.cute.guis.config.elements.ScrollBar;
 import me.weikuwu.cute.utils.font.Fonts;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,7 +21,6 @@ import org.lwjgl.input.Mouse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class CatGUI extends GuiScreen implements BlurScreen {
     public static ArrayList<Setting> settings = new ArrayList<>();
     private final int columnWidth = 300;
@@ -27,8 +28,6 @@ public class CatGUI extends GuiScreen implements BlurScreen {
     private int prevMouseY;
     private int scrollOffset = 0;
     private boolean scrolling = false;
-    private Integer prevWidth = null;
-    private Integer prevHeight = null;
 
     public CatGUI() {
         settings = getFilteredSettings();
@@ -37,49 +36,40 @@ public class CatGUI extends GuiScreen implements BlurScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         MinecraftForge.EVENT_BUS.post(new RenderEvent(Stage.START, partialTicks));
-        // Dark Background
         drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
-
         mouseMoved(mouseY);
 
-        // Settings
+        int x = getOffset();
+        int viewport = height - headerHeight - 9;
+        int contentHeight = settings.size() * 15;
+        int scrollbarX = x + columnWidth + 10;
+        int y = headerHeight - scrollOffset;
+
         for (int i = 0; i < settings.size(); i++) {
             Setting setting = settings.get(i);
-
-            int x = getOffset();
-            int y = headerHeight + (i * 15) - scrollOffset;
-
             x += setting.getIndent(0);
+            char color = 'f';
+            if (setting instanceof Boolean && setting.get(java.lang.Boolean.class)) color = 'a';
 
-            // Setting Border
-//            if (setting.parent == null && i > 0) {
-//                drawRect(x, y - 3, getOffset() + columnWidth, y - 2, ConfigInput.transparent.getRGB());
-//            }
-
-            // Setting Text
-            char color = 'f'; // White
-            if (setting instanceof Boolean && setting.get(java.lang.Boolean.class)) color = 'a'; // Green
-//            if (setting instanceof Folder && ((Folder) setting).isChildEnabled()) color = 'a'; // Green
-
-            Fonts.Inter.drawString("§" + color + setting.name, x, y + 1, 0xFFFFFFFF);
+            Fonts.Inter.drawString("§" + color + setting.name, x, y + (i * 15) + 1, 0xFFFFFFFF);
             if (setting.note != null) {
                 int settingNameWidth = (int) Fonts.Inter.getStringWidth(setting.name + " ");
                 GlStateManager.translate(0, 1.8, 0);
-                Fonts.Description.drawString("§7" + setting.note, x + settingNameWidth, y, 0xFFFFFFFF);
+                Fonts.Description.drawString("§7" + setting.note, x + settingNameWidth, y + (i * 15), 0xFFFFFFFF);
                 GlStateManager.translate(0, -1.8, 0);
             }
         }
 
-        prevWidth = width;
-        prevHeight = height;
+        ScrollBar scrollbar = new ScrollBar(headerHeight, viewport, contentHeight, scrollOffset, scrollbarX, scrolling);
+        buttonList.add(scrollbar);
+
         MinecraftForge.EVENT_BUS.post(new RenderEvent(Stage.END, partialTicks));
     }
 
     @Override
     public void initGui() {
         buttonList.clear();
-
         int x = getOffset() + columnWidth;
         int y = headerHeight - scrollOffset;
 
@@ -88,38 +78,29 @@ public class CatGUI extends GuiScreen implements BlurScreen {
             buttonList.add(ConfigInput.buttonFromSetting(setting, x, y + (i * 15)));
         }
 
-        int viewport = height - headerHeight - 9;
-        int contentHeight = settings.size() * 15;
-        int scrollbarX = getOffset() + columnWidth + 10;
-
-        ScrollBar scrollbar = new ScrollBar(headerHeight, viewport, contentHeight, scrollOffset, scrollbarX, scrolling);
-        buttonList.add(scrollbar);
         MinecraftForge.EVENT_BUS.post(new ScreenOpenEvent(this));
     }
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        if (button instanceof ScrollBar) {
-            scrolling = true;
-        } else {
+        scrolling = button instanceof ScrollBar;
+        if (!scrolling) {
             settings.clear();
             settings = getFilteredSettings();
         }
         initGui();
     }
+
     @Override
     protected void mouseReleased(int mouseX, int mouseY, int state) {
         scrolling = false;
         super.mouseReleased(mouseX, mouseY, state);
     }
 
-    // pixels - Whether to scroll that amount, or to convert to a percentage
     private void scrollScreen(int scrollAmount, boolean pixels) {
         int viewport = height - headerHeight - 9;
         int contentHeight = settings.size() * 15;
-
         if (!pixels) scrollAmount = (int) ((scrollAmount / (float) viewport) * contentHeight);
-
         if (contentHeight > viewport) {
             scrollOffset = MathHelper.clamp_int(scrollOffset + scrollAmount, 0, contentHeight - viewport);
             initGui();
@@ -133,18 +114,11 @@ public class CatGUI extends GuiScreen implements BlurScreen {
 
     private ArrayList<Setting> getFilteredSettings() {
         ArrayList<Setting> newSettings = new ArrayList<>();
-
         for (Setting setting : CatMod.settings) {
-
-            if (setting.parent == null) {
+            if (setting.parent == null || (newSettings.contains(setting.parent) && setting.parent.get(java.lang.Boolean.class))) {
                 newSettings.add(setting);
-            } else {
-                if (newSettings.contains(setting.parent) && setting.parent.get(java.lang.Boolean.class)) {
-                    newSettings.add(setting);
-                }
             }
         }
-
         return newSettings;
     }
 
@@ -159,53 +133,6 @@ public class CatGUI extends GuiScreen implements BlurScreen {
     private int getOffset() {
         return (width - columnWidth) / 2;
     }
-//    private static final float ASPECT_RATIO_WIDTH = 16f;
-//    private static final float ASPECT_RATIO_HEIGHT = 9f;
-//
-//    private CatRenderer guiRenderer;
-//
-//    @Override
-//    public void initGui() {
-//        this.buttonList.add(new Button(1, this.width / 2 - 50, this.height / 2 - 20, 100, 40, "Click Me!"));
-//    }
-//
-//    @Override
-//    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-//        drawDefaultBackground();
-//
-//        if (guiRenderer == null) {
-//            guiRenderer = new CatRenderer(mc);
-//        }
-//        guiRenderer.renderGui(mouseX, mouseY, partialTicks);
-//
-//        super.drawScreen(mouseX, mouseY, partialTicks);
-//    }
-
-
-
-//
-//    @Override
-//    protected void keyTyped(char typedChar, int keyCode) throws IOException {
-//        if (textField.textboxKeyTyped(typedChar, keyCode)) {
-//            // what happens here?
-//        } else {
-//            super.keyTyped(typedChar, keyCode);
-//        }
-//    }
-//
-//    @Override
-//    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-//        super.mouseClicked(mouseX, mouseY, mouseButton);
-//
-//        textField.mouseClicked(mouseX, mouseY, mouseButton);
-//    }
-//
-//    @Override
-//    protected void actionPerformed(GuiButton button) {
-//        if (guiRenderer != null) {
-//            guiRenderer.handleActions(button.id);
-//        }
-//    }
 
     @Override
     public void updateScreen() {
@@ -228,21 +155,3 @@ public class CatGUI extends GuiScreen implements BlurScreen {
         return true;
     }
 }
-
-//    @Override
-//    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-//        drawDefaultBackground();
-//        super.drawScreen(mouseX, mouseY, partialTicks);
-//
-//        int guiWidth = 1920;
-//        int guiHeight = 1080;
-//        int screenWidth = Minecraft.getMinecraft().displayWidth;
-//        int screenHeight = Minecraft.getMinecraft().displayHeight;
-//        double scaleFactor = 1920.0 / screenWidth;
-//        int rectWidth = (int) (100 * scaleFactor);
-//        int rectHeight = (int) (50 * scaleFactor);
-//        int rectX = (screenWidth - rectWidth) / 2;
-//        int rectY = (screenHeight - rectHeight) / 2;
-//        Fonts.Inter.drawString("Custom GUI", width / 2, 20, 0xFFFFFFFF);
-//        textField.drawTextBox();
-//    }

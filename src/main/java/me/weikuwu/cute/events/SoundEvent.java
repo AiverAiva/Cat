@@ -8,7 +8,7 @@ public class SoundEvent extends Event {
     public String uuid;
     public String name;
 
-    public SoundEvent(final ISound sound, final String uuid, final String name) {
+    public SoundEvent(ISound sound, String uuid, String name) {
         this.sound = sound;
         this.uuid = uuid;
         this.name = name;
@@ -16,6 +16,6 @@ public class SoundEvent extends Event {
 
     @Override
     public String toString() {
-        return this.sound + " - " + this.uuid + " - " + this.name;
+        return sound + " - " + uuid + " - " + name;
     }
 }

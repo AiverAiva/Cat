@@ -15,7 +15,7 @@ public class TickEndEvent extends Event {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if(event.phase == TickEvent.Phase.END) {
+        if (event.phase == TickEvent.Phase.END) {
             MinecraftForge.EVENT_BUS.post(new TickEndEvent());
             staticCount++;
         }

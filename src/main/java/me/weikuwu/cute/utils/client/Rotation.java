@@ -1,11 +1,10 @@
 package me.weikuwu.cute.utils.client;
 
-public class Rotation
-{
+public class Rotation {
     private float yaw;
     private float pitch;
 
-    public Rotation(final float yaw, final float pitch) {
+    public Rotation(float yaw, float pitch) {
         this.yaw = yaw;
         this.pitch = pitch;
     }
@@ -14,7 +13,7 @@ public class Rotation
         return this.yaw;
     }
 
-    public void setYaw(final float yaw) {
+    public void setYaw(float yaw) {
         this.yaw = yaw;
     }
 
@@ -22,15 +21,15 @@ public class Rotation
         return this.pitch;
     }
 
-    public void setPitch(final float pitch) {
+    public void setPitch(float pitch) {
         this.pitch = pitch;
     }
 
-    public void addYaw(final float yaw) {
+    public void addYaw(float yaw) {
         this.yaw += yaw;
     }
 
-    public void addPitch(final float pitch) {
+    public void addPitch(float pitch) {
         this.pitch += pitch;
     }
 

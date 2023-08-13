@@ -5,6 +5,7 @@ import me.weikuwu.cute.config.settings.Setting;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public abstract class ParentSetting extends Setting {
 
@@ -15,14 +16,6 @@ public abstract class ParentSetting extends Setting {
     }
 
     public ArrayList<Setting> getChildren(ArrayList<Setting> settings) {
-        ArrayList<Setting> children = new ArrayList<>();
-
-        for (Setting setting : settings) {
-            if (setting.parent == this) {
-                children.add(setting);
-            }
-        }
-
-        return children;
+        return settings.stream().filter(setting -> setting.parent == this).collect(Collectors.toCollection(ArrayList::new));
     }
 }

@@ -21,7 +21,7 @@ public abstract class Setting {
         name = annotation.name();
         warning = annotation.warning();
         beta = annotation.beta();
-        if (!annotation.note().equals("")) note = annotation.note();
+        if (!annotation.note().isEmpty()) note = annotation.note();
         this.field = field;
     }
 
@@ -40,9 +40,9 @@ public abstract class Setting {
     public <T> T get(Class<T> type) {
         try {
             return type.cast(field.get(Object.class));
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            return null;
         }
-        return null;
     }
 
     public boolean set(Object value) {
@@ -51,16 +51,13 @@ public abstract class Setting {
             field.set(value.getClass(), value);
             MinecraftForge.EVENT_BUS.post(new SettingUpdateEvent(this, oldValue, value));
             return true;
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
-    public void forceSet(Object value) {
-        try {
-            field.set(value.getClass(), value);
-        } catch (Exception ignored) {
-        }
+    public void forceSet(Object value) throws IllegalAccessException {
+        field.set(value.getClass(), value);
     }
 
 }

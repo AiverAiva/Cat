@@ -5,10 +5,9 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.input.Keyboard;
 
 public class KeyBindings {
-    public static KeyBinding toggleAutofish;
+    public static KeyBinding toggleAutofish = new KeyBinding("Auto Fish", Keyboard.KEY_M, "Cat Mod");
 
     public static void init() {
-        toggleAutofish = new KeyBinding("Auto Fish", Keyboard.KEY_M, "Cat Mod");
         ClientRegistry.registerKeyBinding(toggleAutofish);
     }
 }

@@ -4,40 +4,37 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import me.weikuwu.cute.config.Config;
-import me.weikuwu.cute.utils.gui.ChatUtils;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShowCandies {
+
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onItemTooltipLow(ItemTooltipEvent event) {
-        if(Config.showCandies){
+    public void onItemTooltip(ItemTooltipEvent event) {
+        if (Config.showCandies) {
             List<String> newTooltip = new ArrayList<>();
-            NBTTagCompound tag = event.itemStack.getTagCompound();
-
-
-            if(tag!=null && tag.hasKey("ExtraAttributes")) {
-                NBTTagCompound attributes = tag.getCompoundTag("ExtraAttributes");
-                if(attributes.hasKey("petInfo")){
-                    String petInfoJson = attributes.getString("petInfo");
-                    try {
-                        JsonObject petInfoObject = new JsonParser().parse(petInfoJson).getAsJsonObject();
-                        int candyUsed = petInfoObject.get("candyUsed").getAsInt();
-                        newTooltip.add(EnumChatFormatting.DARK_GREEN + "Candy used: " + EnumChatFormatting.GRAY + candyUsed);
-                    } catch (JsonParseException e) {
-                        e.printStackTrace();
-                    }
-                }
+            JsonObject petInfo = getPetInfo(event.itemStack);
+            if (petInfo != null) {
+                int candyUsed = petInfo.get("candyUsed").getAsInt();
+                newTooltip.add("§2Candy used: §7" + candyUsed);
             }
             event.toolTip.addAll(newTooltip);
         }
+    }
+
+    private JsonObject getPetInfo(ItemStack itemStack) {
+        try {
+            String petInfoJson = itemStack.getTagCompound().getCompoundTag("ExtraAttributes").getString("petInfo");
+            return new JsonParser().parse(petInfoJson).getAsJsonObject();
+        } catch (NullPointerException | JsonParseException e) {
+            System.err.println("Exception while getting pet info");
+            e.printStackTrace();
+        }
+        return null;
     }
 }

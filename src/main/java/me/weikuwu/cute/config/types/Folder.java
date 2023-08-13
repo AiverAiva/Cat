@@ -16,15 +16,11 @@ public class Folder extends ParentSetting implements DoNotSave {
 
     public static boolean isEnabled(String name) {
         Setting setting = ConfigManager.getSettingByName(name, CatMod.settings);
-        if (setting == null) return false;
-        return ((Folder) setting).isChildEnabled();
+        return setting instanceof Folder && ((Folder) setting).isChildEnabled();
     }
 
     public boolean isChildEnabled() {
-        for (Setting child : children) {
-            if (child instanceof Boolean && child.get(java.lang.Boolean.class)) return true;
-            if (child instanceof Folder && ((Folder) child).isChildEnabled()) return true;
-        }
-        return false;
+        return children.stream().anyMatch(child -> (child instanceof Boolean && child.get(java.lang.Boolean.class)) ||
+                (child instanceof Folder && ((Folder) child).isChildEnabled()));
     }
 }

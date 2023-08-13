@@ -9,11 +9,8 @@ import java.lang.reflect.Field;
 
 public class Number extends Setting implements Comparable<Integer> {
 
-    public int step;
-    public int min;
-    public int max;
-    public String prefix;
-    public String suffix;
+    public int step, min, max;
+    public String prefix, suffix;
 
     public Number(Property annotation, Field field) {
         super(annotation, field);
@@ -31,10 +28,6 @@ public class Number extends Setting implements Comparable<Integer> {
 
     @Override
     public int compareTo(@NotNull Integer other) {
-        try {
-            return Integer.compare(get(int.class), other);
-        } catch (Exception ignored) {
-        }
-        return 0;
+        return Integer.compare(get(int.class), other);
     }
 }

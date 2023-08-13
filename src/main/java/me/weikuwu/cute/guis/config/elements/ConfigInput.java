@@ -1,9 +1,10 @@
 package me.weikuwu.cute.guis.config.elements;
 
 import me.weikuwu.cute.config.settings.Setting;
-import me.weikuwu.cute.config.types.*;
 import me.weikuwu.cute.config.types.Boolean;
 import me.weikuwu.cute.config.types.Number;
+import me.weikuwu.cute.config.types.Select;
+import me.weikuwu.cute.utils.font.Fonts;
 import net.minecraft.client.gui.GuiButton;
 
 import java.awt.*;
@@ -23,7 +24,7 @@ public abstract class ConfigInput extends GuiButton {
     }
 
     public static ConfigInput buttonFromSetting(Setting setting, int x, int y) {
-        switch(setting.annotation.type()) {
+        switch (setting.annotation.type()) {
             case BOOLEAN:
                 return new SwitchInput((Boolean) setting, x, y);
 
@@ -49,4 +50,29 @@ public abstract class ConfigInput extends GuiButton {
                 return null;
         }
     }
+
+    public static boolean handleMousePress(Boolean setting, boolean hovered) {
+        if (hovered) {
+            setting.set(!setting.get(java.lang.Boolean.class));
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isHovered(int mouseX, int mouseY) {
+        return mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
+    }
+
+    public static void drawStringWithDoubles(String text, double x, double y) {
+        Fonts.Inter.drawString(text, x, y, 0xFFFFFFFF);
+    }
+
+    public void drawHoveredStringWithInts(boolean hovered, String text, int x, int y) {
+        drawStringWithInts((hovered ? "§a" : "§7") + text, x, y);
+    }
+
+    public void drawStringWithInts(String text, int x, int y) {
+        Fonts.Inter.drawString(text, x, y, 0xFFFFFF);
+    }
+
 }

@@ -1,14 +1,9 @@
 package me.weikuwu.cute.utils.math;
 
 public class Time {
-    private long lastMS;
+    private long lastMS = System.currentTimeMillis();
 
-    public Time() {
-        this.lastMS = 0L;
-        this.reset();
-    }
-
-    public int convertToMS(final int d) {
+    public int convertToMS(int d) {
         return 1000 / d;
     }
 
@@ -16,27 +11,27 @@ public class Time {
         return System.nanoTime() / 1000000L;
     }
 
-    public boolean hasReached(final long milliseconds) {
-        return this.getCurrentMS() - this.lastMS >= milliseconds;
+    public boolean hasReached(long milliseconds) {
+        return getCurrentMS() - lastMS >= milliseconds;
     }
 
-    public boolean hasTimeReached(final long delay) {
-        return System.currentTimeMillis() - this.lastMS >= delay;
+    public boolean hasTimeReached(long delay) {
+        return System.currentTimeMillis() - lastMS >= delay;
     }
 
     public long getDelay() {
-        return System.currentTimeMillis() - this.lastMS;
+        return System.currentTimeMillis() - lastMS;
     }
 
     public void reset() {
-        this.lastMS = this.getCurrentMS();
+        lastMS = getCurrentMS();
     }
 
     public void setLastMS() {
-        this.lastMS = System.currentTimeMillis();
+        lastMS = System.currentTimeMillis();
     }
 
-    public void setLastMS(final long lastMS) {
+    public void setLastMS(long lastMS) {
         this.lastMS = lastMS;
     }
 }

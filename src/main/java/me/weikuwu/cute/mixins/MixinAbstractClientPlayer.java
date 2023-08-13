@@ -1,6 +1,6 @@
-package me.weikuwu.cute.mixin;
+package me.weikuwu.cute.mixins;
 
-import me.weikuwu.cute.remote.CapeLoader;
+import me.weikuwu.cute.utils.remote.CapeLoader;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.util.ResourceLocation;

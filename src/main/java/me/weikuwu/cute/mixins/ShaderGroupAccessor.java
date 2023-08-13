@@ -1,4 +1,4 @@
-package me.weikuwu.cute.mixin;
+package me.weikuwu.cute.mixins;
 
 import net.minecraft.client.shader.Shader;
 import net.minecraft.client.shader.ShaderGroup;

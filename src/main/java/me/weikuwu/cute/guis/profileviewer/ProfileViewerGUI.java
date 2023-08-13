@@ -1,8 +1,11 @@
 package me.weikuwu.cute.guis.profileviewer;
 
-import me.weikuwu.cute.events.*;
+import me.weikuwu.cute.events.RenderEvent;
+import me.weikuwu.cute.events.ScreenOpenEvent;
+import me.weikuwu.cute.events.Stage;
 import me.weikuwu.cute.guis.BlurScreen;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.MinecraftForge;
 
 

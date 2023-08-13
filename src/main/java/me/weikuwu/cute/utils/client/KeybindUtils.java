@@ -1,71 +1,64 @@
 package me.weikuwu.cute.utils.client;
 
-import net.minecraft.client.*;
-import java.lang.reflect.*;
-import net.minecraft.client.settings.*;
+import me.weikuwu.cute.CatMod;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class KeybindUtils {
-    private static Minecraft mc;
+
     private static Method clickMouse;
     private static Method rightClickMouse;
 
     public static void setup() {
-        try {
-            KeybindUtils.clickMouse = Minecraft.class.getDeclaredMethod("clickMouse", (Class<?>[])new Class[0]);
-        }
-        catch (NoSuchMethodException e) {
-            try {
-                KeybindUtils.clickMouse = Minecraft.class.getDeclaredMethod("func_147116_af", (Class<?>[])new Class[0]);
-            }
-            catch (NoSuchMethodException ex) {
-                ex.printStackTrace();
-            }
-        }
-        try {
-            KeybindUtils.rightClickMouse = Minecraft.class.getDeclaredMethod("rightClickMouse", (Class<?>[])new Class[0]);
-        }
-        catch (NoSuchMethodException e) {
-            try {
-                KeybindUtils.rightClickMouse = Minecraft.class.getDeclaredMethod("func_147121_ag", (Class<?>[])new Class[0]);
-            }
-            catch (NoSuchMethodException e2) {
-                e.printStackTrace();
-            }
-        }
-        if (KeybindUtils.clickMouse != null) {
-            KeybindUtils.clickMouse.setAccessible(true);
-        }
-        if (KeybindUtils.rightClickMouse != null) {
-            KeybindUtils.rightClickMouse.setAccessible(true);
-        }
+        setupMethod("clickMouse", "func_147116_af");
+        setupMethod("rightClickMouse", "func_147121_ag");
     }
 
-    public static void leftClick() {
+    private static void setupMethod(String methodName, String obfuscatedMethodName) {
         try {
-            KeybindUtils.clickMouse.invoke(Minecraft.getMinecraft());
-        }
-        catch (InvocationTargetException | IllegalAccessException e) {
+            Method method = findMethod(Minecraft.class, methodName, obfuscatedMethodName);
+            method.setAccessible(true);
+            if (methodName.equals("clickMouse")) {
+                clickMouse = method;
+            } else if (methodName.equals("rightClickMouse")) {
+                rightClickMouse = method;
+            }
+        } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
 
-    public static void rightClick() {
+    private static Method findMethod(Class<?> clazz, String methodName, String obfuscatedMethodName) throws NoSuchMethodException {
         try {
-            KeybindUtils.rightClickMouse.invoke(Minecraft.getMinecraft());
+            return clazz.getDeclaredMethod(methodName);
+        } catch (NoSuchMethodException e) {
+            return clazz.getDeclaredMethod(obfuscatedMethodName);
         }
-        catch (IllegalAccessException | InvocationTargetException ex) {
-            ex.printStackTrace();
+    }
+
+    private static void invokeMethod(Method method) {
+        try {
+            method.invoke(CatMod.mc);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
         }
+    }
+
+    public static void leftClick() {
+        invokeMethod(clickMouse);
+    }
+
+    public static void rightClick() {
+        invokeMethod(rightClickMouse);
     }
 
     public static void stopMovement() {
-        KeyBinding.setKeyBindState(KeybindUtils.mc.gameSettings.keyBindLeft.getKeyCode(), false);
-        KeyBinding.setKeyBindState(KeybindUtils.mc.gameSettings.keyBindRight.getKeyCode(), false);
-        KeyBinding.setKeyBindState(KeybindUtils.mc.gameSettings.keyBindForward.getKeyCode(), false);
-        KeyBinding.setKeyBindState(KeybindUtils.mc.gameSettings.keyBindBack.getKeyCode(), false);
-    }
-
-    static {
-        KeybindUtils.mc = Minecraft.getMinecraft();
+        KeyBinding.setKeyBindState(CatMod.mc.gameSettings.keyBindLeft.getKeyCode(), false);
+        KeyBinding.setKeyBindState(CatMod.mc.gameSettings.keyBindRight.getKeyCode(), false);
+        KeyBinding.setKeyBindState(CatMod.mc.gameSettings.keyBindForward.getKeyCode(), false);
+        KeyBinding.setKeyBindState(CatMod.mc.gameSettings.keyBindBack.getKeyCode(), false);
     }
 }
