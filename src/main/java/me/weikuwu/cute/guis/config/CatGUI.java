@@ -40,29 +40,34 @@ public class CatGUI extends GuiScreen implements BlurScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
         mouseMoved(mouseY);
 
-        int x = getOffset();
-        int viewport = height - headerHeight - 9;
-        int contentHeight = settings.size() * 15;
-        int scrollbarX = x + columnWidth + 10;
-        int y = headerHeight - scrollOffset;
-
         for (int i = 0; i < settings.size(); i++) {
             Setting setting = settings.get(i);
-            x += setting.getIndent(0);
-            char color = 'f';
-            if (setting instanceof Boolean && setting.get(java.lang.Boolean.class)) color = 'a';
 
-            Fonts.Inter.drawString("§" + color + setting.name, x, y + (i * 15) + 1, 0xFFFFFFFF);
+            int x = getOffset();
+            int y = headerHeight + (i * 15) - scrollOffset;
+
+            x += setting.getIndent(0);
+
+            // Setting Border
+//            if (setting.parent == null && i > 0) {
+//                drawRect(x, y - 3, getOffset() + columnWidth, y - 2, ConfigInput.transparent.getRGB());
+//            }
+
+            // Setting Text
+            char color = 'f'; // White
+            if (setting instanceof Boolean && setting.get(java.lang.Boolean.class)) color = 'a'; // Green
+//            if (setting instanceof Folder && ((Folder) setting).isChildEnabled()) color = 'a'; // Green
+
+            Fonts.Inter.drawString("§" + color + setting.name, x, y + 1, 0xFFFFFFFF);
             if (setting.note != null) {
                 int settingNameWidth = (int) Fonts.Inter.getStringWidth(setting.name + " ");
                 GlStateManager.translate(0, 1.8, 0);
-                Fonts.Description.drawString("§7" + setting.note, x + settingNameWidth, y + (i * 15), 0xFFFFFFFF);
+                Fonts.Description.drawString("§7" + setting.note, x + settingNameWidth, y, 0xFFFFFFFF);
                 GlStateManager.translate(0, -1.8, 0);
             }
         }
 
-        ScrollBar scrollbar = new ScrollBar(headerHeight, viewport, contentHeight, scrollOffset, scrollbarX, scrolling);
-        buttonList.add(scrollbar);
+
 
         MinecraftForge.EVENT_BUS.post(new RenderEvent(Stage.END, partialTicks));
     }
@@ -78,13 +83,18 @@ public class CatGUI extends GuiScreen implements BlurScreen {
             buttonList.add(ConfigInput.buttonFromSetting(setting, x, y + (i * 15)));
         }
 
+        int viewport = height - headerHeight - 9;
+        int contentHeight = settings.size() * 15;
+        int scrollbarX = getOffset() + columnWidth + 10;
+
+        ScrollBar scrollbar = new ScrollBar(headerHeight, viewport, contentHeight, scrollOffset, scrollbarX, scrolling);
+        buttonList.add(scrollbar);
         MinecraftForge.EVENT_BUS.post(new ScreenOpenEvent(this));
     }
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        scrolling = button instanceof ScrollBar;
-        if (!scrolling) {
+        if (!(button instanceof ScrollBar)) {
             settings.clear();
             settings = getFilteredSettings();
         }

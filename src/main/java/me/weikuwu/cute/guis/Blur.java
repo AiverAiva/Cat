@@ -29,6 +29,7 @@ public class Blur implements BlurHandler {
         if (event.stage != Stage.END || CatMod.mc.currentScreen == null || !isShaderActive() || progress >= 5) {
             return;
         }
+        progress = getBlurStrengthProgress();
 
         try {
             final List<Shader> listShaders = ((ShaderGroupAccessor) CatMod.mc.entityRenderer.getShaderGroup()).getListShaders();
