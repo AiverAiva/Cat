@@ -55,7 +55,7 @@ public class Blur implements BlurHandler {
             CatMod.mc.entityRenderer.loadShader(blurShader);
             start = System.currentTimeMillis();
             progress = 0;
-        } else if (isShaderActive() && (gui == null || (gui instanceof BlurScreen && ((BlurScreen) gui).hasBackgroundBlur()))) {
+        } else if (isShaderActive() && (gui == null || (!(gui instanceof BlurScreen) || !((BlurScreen) gui).hasBackgroundBlur()))) {
             String name = CatMod.mc.entityRenderer.getShaderGroup().getShaderGroupName();
             if (name.endsWith("fade_in_blur.json")) {
                 CatMod.mc.entityRenderer.stopUseShader();

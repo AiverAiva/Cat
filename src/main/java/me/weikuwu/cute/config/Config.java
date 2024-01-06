@@ -40,6 +40,9 @@ public class Config {
     @Property(type = Property.Type.CHECKBOX, name = "Sneak", parent = "Auto Fish")
     public static boolean sneak = false;
 
+    @Property(type = Property.Type.BOOLEAN, name = "Hide Armor")
+    public static boolean hideArmor = false;
+
     @Property(type = Property.Type.CHECKBOX, name = "Debug Mode", parent = "Auto Fish")
     public static boolean debugMode = false;
 
