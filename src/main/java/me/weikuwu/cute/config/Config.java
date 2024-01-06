@@ -7,6 +7,9 @@ public class Config {
     @Property(type = Property.Type.BOOLEAN, name = "Show Candies", note = "Show candies on pet.")
     public static boolean showCandies = false;
 
+    @Property(type = Property.Type.BOOLEAN, name = "Hide Armor")
+    public static boolean hideArmor = false;
+
     @Property(type = Property.Type.BOOLEAN, name = "Auto Close Secret Chests")
     public static boolean closeSecretChests = false;
 
@@ -40,12 +43,11 @@ public class Config {
     @Property(type = Property.Type.CHECKBOX, name = "Sneak", parent = "Auto Fish")
     public static boolean sneak = false;
 
-    @Property(type = Property.Type.BOOLEAN, name = "Hide Armor")
-    public static boolean hideArmor = false;
-
     @Property(type = Property.Type.CHECKBOX, name = "Debug Mode", parent = "Auto Fish")
     public static boolean debugMode = false;
 
+    @Property(type = Property.Type.BOOLEAN, name = "Developer Mode", note = "weiku is cute")
+    public static boolean devMode = false;
 /*
     @Setting(name = "PetSwap", description = "Activates PetSwap on bobber in water")
     private BooleanSetting petSwap;
