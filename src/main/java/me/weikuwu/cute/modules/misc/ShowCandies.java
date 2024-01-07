@@ -30,7 +30,7 @@ public class ShowCandies {
                         JsonObject petInfoObject = new JsonParser().parse(petInfoJson).getAsJsonObject();
                         int candyUsed = petInfoObject.get("candyUsed").getAsInt();
                         newTooltip.add(EnumChatFormatting.DARK_GREEN + "Candy used: " + EnumChatFormatting.GRAY + candyUsed);
-                    } catch (JsonParseException e) {
+                    } catch (JsonParseException | IllegalStateException e) {
                         e.printStackTrace();
                     }
                 }
