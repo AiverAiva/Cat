@@ -10,6 +10,7 @@
     "MixinAbstractClientPlayer",
     "RenderManagerAccessor",
     "ShaderGroupAccessor",
-    "MixinLayerArmorBase"
+    "MixinLayerArmorBase",
+    "MixinLayerCustomHead"
   ]
 }
