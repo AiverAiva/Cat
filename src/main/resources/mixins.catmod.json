@@ -4,13 +4,14 @@
   "minVersion": "0.7",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinGuiUtils"
   ],
   "client": [
-    "MixinGuiMainMenu",
     "MixinAbstractClientPlayer",
-    "RenderManagerAccessor",
-    "ShaderGroupAccessor",
+    "MixinGuiMainMenu",
     "MixinLayerArmorBase",
-    "MixinLayerCustomHead"
+    "MixinLayerCustomHead",
+    "RenderManagerAccessor",
+    "ShaderGroupAccessor"
   ]
 }

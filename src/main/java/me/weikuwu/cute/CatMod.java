@@ -8,10 +8,12 @@ import me.weikuwu.cute.config.settings.Setting;
 import me.weikuwu.cute.events.TickEndEvent;
 import me.weikuwu.cute.handlers.BlurHandler;
 import me.weikuwu.cute.handlers.KeyInputHandler;
+import me.weikuwu.cute.modules.dungeons.GhostPickaxe;
 import me.weikuwu.cute.modules.misc.DeveloperMode;
 import me.weikuwu.cute.modules.misc.DiscordRPC;
 import me.weikuwu.cute.modules.dungeons.AutoCloseChest;
 import me.weikuwu.cute.modules.macros.AutoFish;
+import me.weikuwu.cute.modules.misc.ScrollableTooltips;
 import me.weikuwu.cute.modules.misc.ShowCandies;
 import me.weikuwu.cute.utils.remote.CapeLoader;
 import me.weikuwu.cute.utils.font.Fonts;
@@ -61,6 +63,7 @@ public class CatMod {
                 new KeyInputHandler(),
                 new ShowCandies(),
                 new DeveloperMode(),
+                new GhostPickaxe(),
                 BlurHandler.INSTANCE
         );
     }

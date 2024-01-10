@@ -3,6 +3,35 @@ package me.weikuwu.cute.config;
 import me.weikuwu.cute.config.settings.Property;
 
 public class Config {
+    @Property(
+            name = "Scrollable Tooltips", note = "u scroll",
+            type = Property.Type.BOOLEAN
+    )
+    public static boolean masterToggle = true;
+
+    @Property(
+            name = "Horizontal Scrolling", note = "Turns horizontal scrolling on/off.", parent = "Scrollable Tooltips",
+            type = Property.Type.BOOLEAN
+    )
+    public static boolean horizontalScrolling = true;
+
+    @Property(
+            name = "Vertical Scrolling", note = "Turns vertical scrolling on/off.", parent = "Scrollable Tooltips",
+            type = Property.Type.BOOLEAN
+    )
+    public static boolean verticalScrolling = true;
+
+    @Property(
+            name = "Tooltip Zooming", note = "Turns zooming on tooltips on/off.", parent = "Scrollable Tooltips",
+            type = Property.Type.BOOLEAN
+    )
+    public static boolean zoom = true;
+
+    @Property(
+            name = "Start at the Top of Tooltips", note = "Changes tooltips to always show the top.", parent = "Scrollable Tooltips",
+            type = Property.Type.BOOLEAN
+    )
+    public static boolean startAtTop = true;
 
     @Property(type = Property.Type.BOOLEAN, name = "Show Candies", note = "Show candies on pet.")
     public static boolean showCandies = false;
@@ -15,6 +44,15 @@ public class Config {
 
     @Property(type = Property.Type.NUMBER, name = "Close Delay", parent = "Auto Close Secret Chests", max = 20, suffix = " ticks")
     public static int closeSecretChestsDelay = 1;
+
+    @Property(type = Property.Type.BOOLEAN, name = "Ghost Pickaxe", note = "Create ghost blocks when breaking.")
+    public static boolean ghostPickaxe = false;
+
+    @Property(type = Property.Type.BOOLEAN, name = "On Shift", parent = "Ghost Pickaxe")
+    public static boolean ghostPickaxeOnShift = false;
+
+    @Property(type = Property.Type.BOOLEAN, name = "Only in Dungeons", parent = "Ghost Pickaxe")
+    public static boolean ghostPickaxeOnlyInDungeon = false;
 
     @Property(type = Property.Type.BOOLEAN, name = "Auto Fish")
     public static boolean autoFish = false;

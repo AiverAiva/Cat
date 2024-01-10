@@ -2,6 +2,7 @@ plugins {
     idea
     java
     id("gg.essential.loom") version "0.10.0.+"
+//    id("gg.essential.defaults")
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
@@ -50,9 +51,11 @@ sourceSets.main {
 
 repositories {
     mavenCentral()
+//    maven("https://repo.essential.gg/repository/maven-public")
+    maven("https://repo.essential.gg/repository/maven-public")
     maven("https://repo.spongepowered.org/maven/")
     // If you don't want to log in with your real minecraft account, remove this line
-    maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
+//    maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
 //    maven("https://jitpack.io")
 }
 
@@ -66,6 +69,7 @@ dependencies {
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 //    shadowImpl("com.github.CDAGaming:DiscordIPC:master-SNAPSHOT")
     shadowImpl("com.jagrosh:DiscordIPC:0.4")
+    shadowImpl("gg.essential:universalcraft-1.8.9-forge:323")
     // If you don't want mixins, remove these lines
     shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         isTransitive = false
