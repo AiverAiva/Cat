@@ -4,11 +4,11 @@
   "minVersion": "0.7",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinGuiUtils"
   ],
   "client": [
     "MixinAbstractClientPlayer",
     "MixinGuiMainMenu",
+    "MixinGuiUtils",
     "MixinLayerArmorBase",
     "MixinLayerCustomHead",
     "RenderManagerAccessor",

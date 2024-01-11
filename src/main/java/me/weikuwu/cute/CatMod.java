@@ -1,6 +1,5 @@
 package me.weikuwu.cute;
 
-import com.jagrosh.discordipc.exceptions.NoDiscordClientException;
 import me.weikuwu.cute.commands.OpenConfig;
 import me.weikuwu.cute.config.Config;
 import me.weikuwu.cute.config.ConfigManager;
@@ -13,7 +12,6 @@ import me.weikuwu.cute.modules.misc.DeveloperMode;
 import me.weikuwu.cute.modules.misc.DiscordRPC;
 import me.weikuwu.cute.modules.dungeons.AutoCloseChest;
 import me.weikuwu.cute.modules.macros.AutoFish;
-import me.weikuwu.cute.modules.misc.ScrollableTooltips;
 import me.weikuwu.cute.modules.misc.ShowCandies;
 import me.weikuwu.cute.utils.remote.CapeLoader;
 import me.weikuwu.cute.utils.font.Fonts;

@@ -1,9 +1,9 @@
 package me.weikuwu.cute.mixins;
 
 import gg.essential.universal.UMatrixStack;
+import me.weikuwu.cute.config.Config;
 import me.weikuwu.cute.modules.misc.ScrollableTooltips;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -34,7 +34,7 @@ public class MixinGuiUtils {
     )
     private static int scrollableTooltips$captureTooltipY(int tooltipY) {
         scrollableTooltips$tooltipY = tooltipY;
-        return 0;
+        return Config.masterToggle ? 0 : tooltipY;
     }
 
     @ModifyVariable(
@@ -53,13 +53,13 @@ public class MixinGuiUtils {
             at = @At("STORE"),
             name = "tooltipX",
             slice = @Slice(
-                    from = @At(value = "NEW", target = "Ljava/util/ArrayList;<init>()V")
+                    from = @At(value = "NEW", target = "java/util/ArrayList")
             ),
             remap = false
     )
     private static int scrollableTooltips$captureTooltipX(int tooltipX) {
         scrollableTooltips$tooltipX = tooltipX;
-        return 0;
+        return Config.masterToggle ? 0 : tooltipX;
     }
 
 
@@ -73,6 +73,9 @@ public class MixinGuiUtils {
             remap = false
     )
     private static void scrollableTooltips$pushMatrixAndTranslate(List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, FontRenderer font, CallbackInfo ci) {
+        if (scrollableTooltips$tooltipY + scrollableTooltips$tooltipHeight + 6 > screenHeight)  {
+            scrollableTooltips$tooltipY = screenHeight - scrollableTooltips$tooltipHeight - 6;
+        }
         scrollableTooltips$matrixStack.push();
         scrollableTooltips$matrixStack.translate(scrollableTooltips$tooltipX, scrollableTooltips$tooltipY, 0.0);
         ScrollableTooltips.drawHoveringText(scrollableTooltips$matrixStack, textLines, screenHeight, scrollableTooltips$tooltipY, scrollableTooltips$tooltipHeight);
