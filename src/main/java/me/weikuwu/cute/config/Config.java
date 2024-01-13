@@ -116,7 +116,7 @@ public class Config {
             parent = "Auto Fish",
             name = "Hyperion Damage",
             max = 3000000, step = 250000,
-            type = Property.Type.NUMBER,
+            type = Property.Type.NUMBER
     )
     public static int hypDamage = 1000000;
 
